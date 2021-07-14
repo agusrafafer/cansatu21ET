@@ -5,22 +5,26 @@
  */
 package edu.ues21.cansat21.control;
 
+import edu.ues21.cansat21.modelo.ArchivoSeleccionado;
 import edu.ues21.cansat21.modelo.Grafico;
 import edu.ues21.cansat21.modelo.Helper;
 import edu.ues21.cansat21.vista.InterfazVista;
 import edu.ues21.cansat21.vista.Principal;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 import org.jfree.chart.ChartPanel;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  * Clase que representa el controlado especifico que se encarga de manipular los
@@ -44,19 +48,25 @@ public class PrincipalController extends Controlador {
     public void actionPerformed(ActionEvent ae) {
 
         switch (ae.getActionCommand()) {
-            case "ELEGIR_CSV":
-                String path = ((Principal) VISTA).seleccionarArchivo();
-                if (path == null) {
-                    ((Principal) VISTA).imprimeMensaje(new Exception("Debe seleccionar un archivo"));
+            case "ELEGIR_CSV_ACCION":
+                File[] archivos = ((Principal) VISTA).seleccionarArchivos();
+                if (archivos == null) {
+                    ((Principal) VISTA).imprimeMensaje(new Exception("Debe seleccionar al menos un archivo"));
                     ((Principal) VISTA).limpiaVista();
                     return;
                 }
-
                 Helper ayuda = new Helper();
-                if (!ayuda.esArchivoValido(path)) {
-                    ((Principal) VISTA).imprimeMensaje(new Exception("Ese no es un archivo valido"));
-                    ((Principal) VISTA).limpiaVista();
-                } 
+                for (File archivo : archivos) {
+                    if (!ayuda.esArchivoValido(archivo.getPath())) {
+                        ((Principal) VISTA).imprimeMensaje(new Exception(archivo.getName() + " no es un archivo valido"));
+                    } else {
+                        ((Principal) VISTA).cargarComboArchivosSel(new ArchivoSeleccionado(archivo.getName(), archivo.getPath()));
+                    }
+                }
+                break;
+
+            case "BORRAR_ARCH_SEL_ACCION":
+                ((Principal) VISTA).quitarItemComboArchivoSel();
                 break;
         }
 
@@ -111,7 +121,7 @@ public class PrincipalController extends Controlador {
      */
     @Override
     public synchronized void drop(DropTargetDropEvent evt) {
-        //Si no se arrastra un boton que tenga la propiedad ActionCommand
+        //Si no se arrastra un boton (arrastable) que tenga la propiedad ActionCommand
         //seteada se termina el método
         if (claseGrafico == null) {
             return;
@@ -122,27 +132,47 @@ public class PrincipalController extends Controlador {
         }
         DropTarget dropTarget = (java.awt.dnd.DropTarget) evt.getSource();
         JPanel panel = (JPanel) dropTarget.getComponent();
+        Component chartPanel = null;
+        for (Component component : panel.getComponents()) {
+            if (component instanceof ChartPanel) {
+                chartPanel = component;
+                break;
+            }
+        }
 
         //A partir de aquí se aplican los patrones Factory method y Command
         //para lograr construir el grafico deseado
         Helper ayuda = new Helper();
         Grafico grafico = Grafico.fabircarGrafico(claseGrafico);
-        ChartPanel chartPanel = grafico.graficar(ayuda.listarValores(((Principal) VISTA).pathArchivoSeleccionado()));
-        chartPanel.setMouseWheelEnabled(true);
-        
-        JMenuItem menuQuitar = new JMenuItem("Quitar");
-        //menuQuitar.setActionCommand("QUITAR");
-        menuQuitar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                panel.removeAll();
-                panel.revalidate();
-                panel.repaint();
+        String pathArchivo = ((Principal) VISTA).pathArchivoSeleccionado();
+        String nombreArchivo = pathArchivo.substring(pathArchivo.lastIndexOf(File.separator) + 1);
+        chartPanel = grafico.graficar(ayuda.listarValores(pathArchivo), chartPanel, nombreArchivo);
+
+        boolean existeMenu = false;
+        for (Component component : ((ChartPanel) chartPanel).getPopupMenu().getComponents()) {
+            if (component instanceof JMenuItem) {
+                if (((JMenuItem) component).getText().equals("Quitar")) {
+                    existeMenu = true;
+                    break;
+                }
             }
-        });
-        chartPanel.getPopupMenu().add(menuQuitar);
-        panel.removeAll();
-        panel.add(chartPanel, BorderLayout.CENTER);
+        }
+        if (!existeMenu) {
+            ((ChartPanel) chartPanel).setMouseWheelEnabled(true);
+            JMenuItem menuQuitar = new JMenuItem("Quitar");
+            //menuQuitar.setActionCommand("QUITAR");
+            menuQuitar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    panel.removeAll();
+                    panel.revalidate();
+                    panel.repaint();
+                }
+            });
+            ((ChartPanel) chartPanel).getPopupMenu().add(menuQuitar);
+            panel.removeAll();
+            panel.add(chartPanel, BorderLayout.CENTER);
+        }
         panel.revalidate();
         panel.repaint();
     }

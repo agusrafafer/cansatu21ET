@@ -6,9 +6,11 @@
 package edu.ues21.cansat21.vista;
 
 import edu.ues21.cansat21.control.Controlador;
+import edu.ues21.cansat21.modelo.ArchivoSeleccionado;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.dnd.DropTarget;
+import java.io.File;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -57,6 +59,8 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 32767));
+        cmbArchivosSel = new javax.swing.JComboBox<>();
+        jButtonQuitarArchSel = new javax.swing.JButton();
         panelDerecha = new javax.swing.JPanel();
         panelTile1 = new javax.swing.JPanel();
         panelTile2 = new javax.swing.JPanel();
@@ -72,8 +76,8 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
 
         jSplitPane1.setBackground(new java.awt.Color(254, 254, 254));
         jSplitPane1.setDividerLocation(200);
-        jSplitPane1.setEnabled(false);
-        jSplitPane1.setPreferredSize(new java.awt.Dimension(216, 600));
+        jSplitPane1.setDividerSize(2);
+        jSplitPane1.setPreferredSize(new java.awt.Dimension(800, 600));
 
         panelIzquierda.setBackground(new java.awt.Color(137, 196, 244));
 
@@ -110,8 +114,10 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
 
         jButtonSelArchivo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButtonSelArchivo.setForeground(new java.awt.Color(130, 130, 130));
-        jButtonSelArchivo.setText("Archivo...");
-        jButtonSelArchivo.setActionCommand("ELEGIR_CSV");
+        jButtonSelArchivo.setToolTipText("Seleccione archivos...");
+        jButtonSelArchivo.setActionCommand("ELEGIR_CSV_ACCION");
+        Icon iconArchivo = IconFontSwing.buildIcon(FontAwesome.FILE, 14, new Color(130, 130, 130));
+        jButtonSelArchivo.setIcon(iconArchivo);
 
         lblArchivoSeleccionado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lblArchivoSeleccionado.setForeground(new java.awt.Color(130, 130, 130));
@@ -144,6 +150,11 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         jPanel3.add(jLabel1, gridBagConstraints);
         jPanel3.add(filler1, new java.awt.GridBagConstraints());
 
+        jButtonQuitarArchSel.setToolTipText("Quitar el archivo seleccionado");
+        jButtonQuitarArchSel.setActionCommand("BORRAR_ARCH_SEL_ACCION");
+        Icon iconQuitarArchivo = IconFontSwing.buildIcon(FontAwesome.TRASH, 14, new Color(130, 130, 130));
+        jButtonQuitarArchSel.setIcon(iconQuitarArchivo);
+
         javax.swing.GroupLayout panelIzquierdaLayout = new javax.swing.GroupLayout(panelIzquierda);
         panelIzquierda.setLayout(panelIzquierdaLayout);
         panelIzquierdaLayout.setHorizontalGroup(
@@ -152,15 +163,18 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
             .addGroup(panelIzquierdaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelIzquierdaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelIzquierdaLayout.createSequentialGroup()
-                        .addComponent(jButtonSelArchivo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblArchivoSeleccionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButtonHumedad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonPresion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelIzquierdaLayout.createSequentialGroup()
-                        .addComponent(jButtonTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblArchivoSeleccionado))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelIzquierdaLayout.createSequentialGroup()
+                        .addComponent(jButtonSelArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbArchivosSel, 0, 106, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonQuitarArchSel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonTemp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonHumedad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonPresion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelIzquierdaLayout.setVerticalGroup(
@@ -168,16 +182,18 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
             .addGroup(panelIzquierdaLayout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelIzquierdaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonSelArchivo)
-                    .addComponent(lblArchivoSeleccionado))
+                .addGroup(panelIzquierdaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cmbArchivosSel)
+                    .addComponent(jButtonQuitarArchSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblArchivoSeleccionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonSelArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonHumedad, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonPresion, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addContainerGap(281, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(panelIzquierda);
@@ -219,7 +235,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -235,9 +251,11 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<ArchivoSeleccionado> cmbArchivosSel;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonHumedad;
     private javax.swing.JButton jButtonPresion;
+    private javax.swing.JButton jButtonQuitarArchSel;
     private javax.swing.JButton jButtonSelArchivo;
     private javax.swing.JButton jButtonTemp;
     private javax.swing.JLabel jLabel1;
@@ -259,10 +277,11 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     public void setControlador(Controlador c) {
         for (Component component : this.panelIzquierda.getComponents()) {
             if (component instanceof JButton) {
-                ((JButton) component).setTransferHandler(new TransferHandler("icon"));
-                ((JButton) component).addMouseMotionListener(c);
-                if (((JButton) component).getActionCommand().equals("ELEGIR_CSV")) {
+                if (((JButton) component).getActionCommand().contains("ACCION")) {
                     ((JButton) component).addActionListener(c);
+                } else {
+                    ((JButton) component).setTransferHandler(new TransferHandler("icon"));
+                    ((JButton) component).addMouseMotionListener(c);
                 }
             }
 //            else if(component instanceof JLabel){
@@ -294,17 +313,18 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     }
 
     @Override
-    public String seleccionarArchivo() {
+    public File[] seleccionarArchivos() {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-        jfc.setDialogTitle("Seleccione un archivo del CANSAT");
+        jfc.setDialogTitle("Seleccione 1 o más archivo del CANSAT");
+        jfc.setMultiSelectionEnabled(true);
         jfc.setAcceptAllFileFilterUsed(false);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo CSV", "CSV");
         jfc.addChoosableFileFilter(filter);
         int returnValue = jfc.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            lblArchivoSeleccionado.setText(jfc.getSelectedFile().getPath().substring(jfc.getSelectedFile().getPath().lastIndexOf(System.getProperty("file.separator"))));
-            lblArchivoSeleccionado.setToolTipText(jfc.getSelectedFile().getPath());
-            return jfc.getSelectedFile().getPath();
+//            lblArchivoSeleccionado.setText(jfc.getSelectedFile().getPath().substring(jfc.getSelectedFile().getPath().lastIndexOf(System.getProperty("file.separator"))));
+//            lblArchivoSeleccionado.setToolTipText(jfc.getSelectedFile().getPath());
+            return jfc.getSelectedFiles();
         }
         return null;
     }
@@ -316,8 +336,24 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     }
 
     @Override
+    public void cargarComboArchivosSel(ArchivoSeleccionado archivosSel) {
+            cmbArchivosSel.addItem(archivosSel);
+    }
+
+    @Override
+    public void quitarItemComboArchivoSel() {
+        int idx = cmbArchivosSel.getSelectedIndex();
+        if (idx > -1) {
+            cmbArchivosSel.removeItemAt(idx);
+        }
+        cmbArchivosSel.revalidate();
+        cmbArchivosSel.repaint();
+    }
+
+    @Override
     public String pathArchivoSeleccionado() {
-        return lblArchivoSeleccionado.getToolTipText();
+        ArchivoSeleccionado archivo = (ArchivoSeleccionado) cmbArchivosSel.getSelectedItem();
+        return archivo.getPathArchivo();
     }
 
 }

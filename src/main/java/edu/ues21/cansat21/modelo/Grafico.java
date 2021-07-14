@@ -5,6 +5,7 @@
  */
 package edu.ues21.cansat21.modelo;
 
+import java.awt.Component;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import org.jfree.chart.ChartPanel;
@@ -21,9 +22,11 @@ public abstract class Grafico {
      * Método Command que debe ser implementado en los "Commands" concretos 
      * para poder construir el gráfico que se desee.
      * @param listaValores Una lista con los valores leidos desde el archivo CSV
+     * @param panel El panel que contiene el grafico que puede existir o no.
+     * @param nombreSerie El nombre de la serie a graficar.
      * @return Devuelve un panel con el gráfico construido.
      */
-    public abstract ChartPanel graficar(List <FormatoCsv> listaValores);
+    public abstract ChartPanel graficar(List <FormatoCsv> listaValores, Component panel, String nombreSerie);
     
     /**
      * Método que esta aplicando el patrón Factory method utilizando reflection de Java.

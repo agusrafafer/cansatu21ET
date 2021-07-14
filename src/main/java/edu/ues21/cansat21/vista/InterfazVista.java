@@ -6,6 +6,8 @@
 package edu.ues21.cansat21.vista;
 
 import edu.ues21.cansat21.control.Controlador;
+import edu.ues21.cansat21.modelo.ArchivoSeleccionado;
+import java.io.File;
 
 
 
@@ -32,8 +34,16 @@ public interface InterfazVista  {
         
     }
     
-    default String seleccionarArchivo(){
+    default File [] seleccionarArchivos(){
         return null;
+    }
+    
+    default void cargarComboArchivosSel(ArchivoSeleccionado archivosSel) {
+        
+    }
+    
+    default void quitarItemComboArchivoSel() {
+        
     }
     
     default String pathArchivoSeleccionado(){
