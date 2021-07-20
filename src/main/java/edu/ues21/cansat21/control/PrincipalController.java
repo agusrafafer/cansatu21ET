@@ -145,6 +145,10 @@ public class PrincipalController extends Controlador {
         Helper ayuda = new Helper();
         Grafico grafico = Grafico.fabircarGrafico(claseGrafico);
         String pathArchivo = ((Principal) VISTA).pathArchivoSeleccionado();
+        if (pathArchivo == null) {
+            ((Principal) VISTA).imprimeMensaje(new Exception("Debe seleccionar al menos un archivo"));
+            return;
+        }
         String nombreArchivo = pathArchivo.substring(pathArchivo.lastIndexOf(File.separator) + 1);
         chartPanel = grafico.graficar(ayuda.listarValores(pathArchivo), chartPanel, nombreArchivo);
 

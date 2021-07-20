@@ -61,6 +61,8 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 32767));
         cmbArchivosSel = new javax.swing.JComboBox<>();
         jButtonQuitarArchSel = new javax.swing.JButton();
+        jButtonIncliAcel = new javax.swing.JButton();
+        jButtonRotaGiro = new javax.swing.JButton();
         panelDerecha = new javax.swing.JPanel();
         panelTile1 = new javax.swing.JPanel();
         panelTile2 = new javax.swing.JPanel();
@@ -155,6 +157,22 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         Icon iconQuitarArchivo = IconFontSwing.buildIcon(FontAwesome.TRASH, 14, new Color(130, 130, 130));
         jButtonQuitarArchSel.setIcon(iconQuitarArchivo);
 
+        jButtonIncliAcel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButtonIncliAcel.setForeground(new java.awt.Color(130, 130, 130));
+        jButtonIncliAcel.setText("Inclinación (Acel)");
+        jButtonIncliAcel.setActionCommand("AcelerometroGrafico");
+        jButtonIncliAcel.setPreferredSize(new java.awt.Dimension(70, 30));
+        Icon iconIncliAcel = IconFontSwing.buildIcon(FontAwesome.COMPASS, 18, new Color(130, 130, 130));
+        jButtonIncliAcel.setIcon(iconIncliAcel);
+
+        jButtonRotaGiro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButtonRotaGiro.setForeground(new java.awt.Color(130, 130, 130));
+        jButtonRotaGiro.setText("Rotación (Giro)");
+        jButtonRotaGiro.setActionCommand("GiroscopoGrafico");
+        jButtonRotaGiro.setPreferredSize(new java.awt.Dimension(70, 30));
+        Icon iconRotaGiro = IconFontSwing.buildIcon(FontAwesome.RAVELRY, 18, new Color(130, 130, 130));
+        jButtonRotaGiro.setIcon(iconRotaGiro);
+
         javax.swing.GroupLayout panelIzquierdaLayout = new javax.swing.GroupLayout(panelIzquierda);
         panelIzquierda.setLayout(panelIzquierdaLayout);
         panelIzquierdaLayout.setHorizontalGroup(
@@ -174,7 +192,9 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
                         .addComponent(jButtonQuitarArchSel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButtonTemp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonHumedad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonPresion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonPresion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonIncliAcel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonRotaGiro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelIzquierdaLayout.setVerticalGroup(
@@ -193,7 +213,11 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
                 .addComponent(jButtonHumedad, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonPresion, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonIncliAcel, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonRotaGiro, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(panelIzquierda);
@@ -254,8 +278,10 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     private javax.swing.JComboBox<ArchivoSeleccionado> cmbArchivosSel;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonHumedad;
+    private javax.swing.JButton jButtonIncliAcel;
     private javax.swing.JButton jButtonPresion;
     private javax.swing.JButton jButtonQuitarArchSel;
+    private javax.swing.JButton jButtonRotaGiro;
     private javax.swing.JButton jButtonSelArchivo;
     private javax.swing.JButton jButtonTemp;
     private javax.swing.JLabel jLabel1;
@@ -353,7 +379,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     @Override
     public String pathArchivoSeleccionado() {
         ArchivoSeleccionado archivo = (ArchivoSeleccionado) cmbArchivosSel.getSelectedItem();
-        return archivo.getPathArchivo();
+        return archivo != null? archivo.getPathArchivo() : null;
     }
 
 }

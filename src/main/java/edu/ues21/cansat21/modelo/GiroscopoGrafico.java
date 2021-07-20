@@ -22,7 +22,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author agustin
  */
-public class AcelerometroGrafico extends Grafico {
+public class GiroscopoGrafico extends Grafico {
 
     /*
      Primero tenemos que saber los rangos con los que está configurado nuestro MPU6050, 
@@ -63,31 +63,41 @@ public class AcelerometroGrafico extends Grafico {
         //tipos de graficos. La letra que se encuentra entre [] indica el tipo
         //de grafico
         for (Object rowKey : dataset.getRowKeys()) {
-            if (chartPanel != null && !rowKey.toString().contains("[A]")) {
+            if (chartPanel != null && !rowKey.toString().contains("[G]")) {
                 return chartPanel;
             }
         }
 
+        //Variables necesarias para calcular 
+        //el la rotacion usando el diferencial
+        //del tiempo
+        long tiempoPrev = 0, dt = 0;
+        double giroscAngX, giroscAngY;
+        double giroscAngXPrev = 0, giroscAngYPrev = 0;
         for (int i = 0; i < listaValores.size(); i++) {
+            dt = (i * 1000) - tiempoPrev;
             FormatoCsv valor = listaValores.get(i);
-            double accelAngX = Math.atan(valor.getAx() / Math.sqrt(Math.pow(valor.getAy(), 2) + Math.pow(valor.getAy(), 2))) * (180.0 / 3.14);
-            double accelAngY = Math.atan(valor.getAy() / Math.sqrt(Math.pow(valor.getAx(), 2) + Math.pow(valor.getAz(), 2))) * (180.0 / 3.14);
+            giroscAngX = (((double)valor.getGx()) / 131) * dt / 1000.0 + giroscAngXPrev;
+            giroscAngY = (((double)valor.getGy()) / 131) * dt / 1000.0 + giroscAngYPrev;
             //Debo usar la clase Double y no el tipo nativo porque
             //el metodo addValue del dataset requiere un objeto
             //comparable
-            Double accelAngYComparable = accelAngY;
-            DecimalFormat decimalFormat = new DecimalFormat("###.##");
-            dataset.addValue(Double.parseDouble(decimalFormat.format(accelAngX).replaceAll(",", ".")), nombreSerie.toUpperCase() + "[A]", decimalFormat.format(accelAngYComparable));
+            Double giroscAngYComparable = giroscAngY;
+            DecimalFormat decimalFormat =  new DecimalFormat("###.##");
+            dataset.addValue(giroscAngX, nombreSerie.toUpperCase() + "[G]", decimalFormat.format(giroscAngYComparable));
+            tiempoPrev = i * 1000; //milisegundos
+            giroscAngXPrev = giroscAngX;
+            giroscAngYPrev = giroscAngY;
         }
         if (chartPanel == null) {
             JFreeChart lineChart = ChartFactory.createLineChart(
-                    "Ángulo inclinación (Acel)",
+                    "Ángulo rotación (Giro)",
                     "º Y", "º X",
                     dataset,
                     PlotOrientation.VERTICAL,
                     true, true, false);
             LineAndShapeRenderer renderer = new LineAndShapeRenderer();
-            renderer.setSeriesPaint(0, Color.DARK_GRAY);
+            renderer.setSeriesPaint(0, Color.ORANGE);
             CategoryPlot plot = lineChart.getCategoryPlot();
             plot.setRenderer(renderer);
             Font font3 = new Font("Dialog", Font.PLAIN, 8);

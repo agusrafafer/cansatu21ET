@@ -7,6 +7,7 @@ package edu.ues21.cansat21.modelo;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -67,6 +68,9 @@ public class PresionGrafico extends Grafico {
             renderer.setSeriesPaint(0, Color.GREEN);
             CategoryPlot plot = lineChart.getCategoryPlot();
             plot.setRenderer(renderer);
+            Font font3 = new Font("Dialog", Font.PLAIN, 8);
+            plot.getDomainAxis().setTickLabelFont(font3);
+            plot.getRangeAxis().setTickLabelFont(font3);
             chartPanel = new ChartPanel(lineChart);
         }
         return chartPanel;
