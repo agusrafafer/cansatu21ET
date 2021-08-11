@@ -18,7 +18,7 @@ import java.awt.event.MouseMotionListener;
  *
  * @author agustin
  */
-public abstract class Controlador extends DropTarget implements ActionListener, MouseMotionListener {
+public abstract class Controlador extends DropTarget implements ActionListener, MouseMotionListener, AdapterMouseListener {
 
     private static final long serialVersionUID = 1L;
     

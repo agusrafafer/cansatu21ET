@@ -82,9 +82,9 @@ public class GiroscopoGrafico extends Grafico {
             //Debo usar la clase Double y no el tipo nativo porque
             //el metodo addValue del dataset requiere un objeto
             //comparable
-            Double giroscAngYComparable = giroscAngY;
+            Double giroscAngXComparable = giroscAngX;
             DecimalFormat decimalFormat =  new DecimalFormat("###.##");
-            dataset.addValue(giroscAngX, nombreSerie.toUpperCase() + "[G]", decimalFormat.format(giroscAngYComparable));
+            dataset.addValue(giroscAngY, nombreSerie.toUpperCase() + "[G]", decimalFormat.format(giroscAngXComparable));
             tiempoPrev = i * 1000; //milisegundos
             giroscAngXPrev = giroscAngX;
             giroscAngYPrev = giroscAngY;
@@ -92,7 +92,7 @@ public class GiroscopoGrafico extends Grafico {
         if (chartPanel == null) {
             JFreeChart lineChart = ChartFactory.createLineChart(
                     "Ángulo rotación (Giro)",
-                    "º Y", "º X",
+                    "º X", "º Y",
                     dataset,
                     PlotOrientation.VERTICAL,
                     true, true, false);

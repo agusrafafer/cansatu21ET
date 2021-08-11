@@ -12,6 +12,7 @@ import edu.ues21.cansat21.vista.InterfazVista;
 import edu.ues21.cansat21.vista.Principal;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
@@ -180,4 +182,30 @@ public class PrincipalController extends Controlador {
         panel.revalidate();
         panel.repaint();
     }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        if (me.getSource() instanceof JLabel) {
+            if (((JLabel) me.getSource()).getAccessibleContext().getAccessibleName().equals("lblAmburguesa")) {
+                ((Principal) VISTA).cierraSplitPane(0);
+            }
+        }
+    }
+    
+    @Override
+    public void mouseEntered(MouseEvent me) {
+        if (me.getSource() instanceof JLabel) {
+            if (((JLabel) me.getSource()).getAccessibleContext().getAccessibleName().equals("lblAmburguesa")) {
+                ((Principal) VISTA).setCursor(new Cursor(Cursor.HAND_CURSOR));
+            } else {
+                ((Principal) VISTA).setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        }
+    }
+    
+    @Override
+    public void mouseExited(MouseEvent me) {
+        ((Principal) VISTA).setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+
 }

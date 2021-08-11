@@ -14,6 +14,7 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
@@ -48,15 +49,15 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jSplitPane1 = new javax.swing.JSplitPane();
+        jSplitPane = new javax.swing.JSplitPane();
         panelIzquierda = new javax.swing.JPanel();
         jButtonTemp = new javax.swing.JButton();
         jButtonHumedad = new javax.swing.JButton();
         jButtonPresion = new javax.swing.JButton();
         jButtonSelArchivo = new javax.swing.JButton();
         lblArchivoSeleccionado = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        panelMenu = new javax.swing.JPanel();
+        lblAmburguesa = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 32767));
         cmbArchivosSel = new javax.swing.JComboBox<>();
@@ -76,10 +77,10 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         setBackground(new java.awt.Color(254, 254, 254));
         setMinimumSize(new java.awt.Dimension(800, 600));
 
-        jSplitPane1.setBackground(new java.awt.Color(254, 254, 254));
-        jSplitPane1.setDividerLocation(200);
-        jSplitPane1.setDividerSize(2);
-        jSplitPane1.setPreferredSize(new java.awt.Dimension(800, 600));
+        jSplitPane.setBackground(new java.awt.Color(254, 254, 254));
+        jSplitPane.setDividerLocation(200);
+        jSplitPane.setDividerSize(5);
+        jSplitPane.setPreferredSize(new java.awt.Dimension(800, 600));
 
         panelIzquierda.setBackground(new java.awt.Color(137, 196, 244));
 
@@ -124,20 +125,21 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         lblArchivoSeleccionado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lblArchivoSeleccionado.setForeground(new java.awt.Color(130, 130, 130));
 
-        jPanel3.setBackground(new java.awt.Color(54, 100, 194));
-        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jPanel3.setLayout(new java.awt.GridBagLayout());
+        panelMenu.setBackground(new java.awt.Color(54, 100, 194));
+        panelMenu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        panelMenu.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        panelMenu.setLayout(new java.awt.GridBagLayout());
 
-        jLabel3.setBackground(new java.awt.Color(54, 100, 194));
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        lblAmburguesa.setBackground(new java.awt.Color(54, 100, 194));
+        lblAmburguesa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblAmburguesa.setForeground(new java.awt.Color(255, 255, 255));
         Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.MENU, 18, new Color(255, 255, 255));
-        jLabel3.setIcon(icon);
+        lblAmburguesa.setIcon(icon);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        jPanel3.add(jLabel3, gridBagConstraints);
+        panelMenu.add(lblAmburguesa, gridBagConstraints);
+        lblAmburguesa.getAccessibleContext().setAccessibleName("lblAmburguesa");
 
         jLabel1.setBackground(new java.awt.Color(54, 100, 194));
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -149,8 +151,8 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        jPanel3.add(jLabel1, gridBagConstraints);
-        jPanel3.add(filler1, new java.awt.GridBagConstraints());
+        panelMenu.add(jLabel1, gridBagConstraints);
+        panelMenu.add(filler1, new java.awt.GridBagConstraints());
 
         jButtonQuitarArchSel.setToolTipText("Quitar el archivo seleccionado");
         jButtonQuitarArchSel.setActionCommand("BORRAR_ARCH_SEL_ACCION");
@@ -177,7 +179,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         panelIzquierda.setLayout(panelIzquierdaLayout);
         panelIzquierdaLayout.setHorizontalGroup(
             panelIzquierdaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelIzquierdaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelIzquierdaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +202,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         panelIzquierdaLayout.setVerticalGroup(
             panelIzquierdaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelIzquierdaLayout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelIzquierdaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cmbArchivosSel)
@@ -220,7 +222,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
                 .addContainerGap(127, Short.MAX_VALUE))
         );
 
-        jSplitPane1.setLeftComponent(panelIzquierda);
+        jSplitPane.setLeftComponent(panelIzquierda);
 
         panelDerecha.setBackground(new java.awt.Color(254, 254, 254));
         panelDerecha.setLayout(new java.awt.GridLayout(3, 3, 10, 10));
@@ -251,7 +253,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     panelTile6.setLayout(new java.awt.BorderLayout());
     panelDerecha.add(panelTile6);
 
-    jSplitPane1.setRightComponent(panelDerecha);
+    jSplitPane.setRightComponent(panelDerecha);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -259,14 +261,14 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addContainerGap())
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addContainerGap())
     );
 
@@ -285,12 +287,12 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     private javax.swing.JButton jButtonSelArchivo;
     private javax.swing.JButton jButtonTemp;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane jSplitPane;
+    private javax.swing.JLabel lblAmburguesa;
     private javax.swing.JLabel lblArchivoSeleccionado;
     private javax.swing.JPanel panelDerecha;
     private javax.swing.JPanel panelIzquierda;
+    private javax.swing.JPanel panelMenu;
     public javax.swing.JPanel panelTile1;
     public javax.swing.JPanel panelTile2;
     public javax.swing.JPanel panelTile3;
@@ -310,11 +312,13 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
                     ((JButton) component).addMouseMotionListener(c);
                 }
             }
-//            else if(component instanceof JLabel){
-//                ((JLabel) component).setTransferHandler(new TransferHandler("icon"));
-//                ((JLabel) component).addMouseMotionListener(c);
-//                ((JLabel) component).addMouseListener(c);
-//            }
+        }
+        for (Component component : this.panelMenu.getComponents()) {
+            if (component instanceof JLabel) {
+                if (component.getAccessibleContext().getAccessibleName().equals("lblAmburguesa")) {
+                    ((JLabel) component).addMouseListener(c);
+                }
+            }
         }
         for (Component component : this.panelDerecha.getComponents()) {
             if (component instanceof JPanel) {
@@ -363,7 +367,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
 
     @Override
     public void cargarComboArchivosSel(ArchivoSeleccionado archivosSel) {
-            cmbArchivosSel.addItem(archivosSel);
+        cmbArchivosSel.addItem(archivosSel);
     }
 
     @Override
@@ -379,7 +383,12 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     @Override
     public String pathArchivoSeleccionado() {
         ArchivoSeleccionado archivo = (ArchivoSeleccionado) cmbArchivosSel.getSelectedItem();
-        return archivo != null? archivo.getPathArchivo() : null;
+        return archivo != null ? archivo.getPathArchivo() : null;
+    }
+
+    @Override
+    public void cierraSplitPane(int posicion) {
+        jSplitPane.setDividerLocation(posicion);
     }
 
 }

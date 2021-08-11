@@ -49,4 +49,8 @@ public interface InterfazVista  {
     default String pathArchivoSeleccionado(){
         return null;
     }
+    
+    default void cierraSplitPane(int posicion) {
+        
+    }
 }

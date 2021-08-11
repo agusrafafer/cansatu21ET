@@ -11,8 +11,13 @@ import java.awt.Font;
 import java.text.DecimalFormat;
 import java.util.List;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartMouseEvent;
+import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.entity.CategoryItemEntity;
+import org.jfree.chart.entity.ChartEntity;
+import org.jfree.chart.labels.StandardCategorySeriesLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
@@ -67,7 +72,7 @@ public class AcelerometroGrafico extends Grafico {
                 return chartPanel;
             }
         }
-
+        
         for (int i = 0; i < listaValores.size(); i++) {
             FormatoCsv valor = listaValores.get(i);
             double accelAngX = Math.atan(valor.getAx() / Math.sqrt(Math.pow(valor.getAy(), 2) + Math.pow(valor.getAy(), 2))) * (180.0 / 3.14);
@@ -77,12 +82,12 @@ public class AcelerometroGrafico extends Grafico {
             //comparable
             Double accelAngYComparable = accelAngY;
             DecimalFormat decimalFormat = new DecimalFormat("###.##");
-            dataset.addValue(Double.parseDouble(decimalFormat.format(accelAngX).replaceAll(",", ".")), nombreSerie.toUpperCase() + "[A]", decimalFormat.format(accelAngYComparable));
+            dataset.addValue(Double.parseDouble(decimalFormat.format(accelAngY).replaceAll(",", ".")), nombreSerie.toUpperCase() + "[A]", decimalFormat.format(accelAngX).replaceAll(",", "."));
         }
         if (chartPanel == null) {
             JFreeChart lineChart = ChartFactory.createLineChart(
                     "Ángulo inclinación (Acel)",
-                    "º Y", "º X",
+                    "º X", "º Y",
                     dataset,
                     PlotOrientation.VERTICAL,
                     true, true, false);
@@ -94,8 +99,35 @@ public class AcelerometroGrafico extends Grafico {
             plot.getDomainAxis().setTickLabelFont(font3);
             plot.getRangeAxis().setTickLabelFont(font3);
             chartPanel = new ChartPanel(lineChart);
+            
+            
+            
+            renderer.setLegendItemToolTipGenerator(
+            new StandardCategorySeriesLabelGenerator("Legend {0}"));
+            
+            chartPanel.addChartMouseListener(new ChartMouseListener() {
+                @Override
+                public void chartMouseClicked(ChartMouseEvent cme) {
+//                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+                
+                @Override
+                public void chartMouseMoved(ChartMouseEvent cme) {
+                    ChartEntity entity = cme.getEntity();
+                    if (!(entity instanceof CategoryItemEntity)) {
+                        //this.renderer.setHighlightedItem(-1, -1);
+                        return;
+                    }
+                    CategoryItemEntity cie = (CategoryItemEntity) entity;
+                    DefaultCategoryDataset dataset = (DefaultCategoryDataset) cie.getDataset();
+                    System.out.println("Fila: " + dataset.getRowIndex(cie.getRowKey()));
+                    System.out.println("Columna" + dataset.getColumnIndex(cie.getColumnKey()));
+//                    this.renderer.setHighlightedItem(dataset.getRowIndex(cie.getRowKey()),
+//                            dataset.getColumnIndex(cie.getColumnKey()));
+                }
+            });
         }
         return chartPanel;
     }
-
+    
 }
