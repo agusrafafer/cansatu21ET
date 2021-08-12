@@ -9,6 +9,7 @@ import edu.ues21.cansat21.control.Controlador;
 import edu.ues21.cansat21.modelo.ArchivoSeleccionado;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Toolkit;
 import java.awt.dnd.DropTarget;
 import java.io.File;
 import javax.swing.Icon;
@@ -75,6 +76,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CANSAT ESTACION TERRENA");
         setBackground(new java.awt.Color(254, 254, 254));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/iconos/satelliteantenna.png")));
         setMinimumSize(new java.awt.Dimension(800, 600));
 
         jSplitPane.setBackground(new java.awt.Color(254, 254, 254));
@@ -273,6 +275,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     );
 
     pack();
+    setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
 
