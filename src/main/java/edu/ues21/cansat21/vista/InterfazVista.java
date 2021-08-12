@@ -53,4 +53,8 @@ public interface InterfazVista  {
     default void cierraSplitPane(int posicion) {
         
     }
+    
+    default void cierraSistema() {
+        
+    }
 }

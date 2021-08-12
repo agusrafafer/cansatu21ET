@@ -10,6 +10,7 @@ import edu.ues21.cansat21.vista.InterfazVista;
 import java.awt.dnd.DropTarget;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowListener;
 
 /**
  * Los demas controladores deben extenderse de esta clase para recibir la vista
@@ -18,7 +19,7 @@ import java.awt.event.MouseMotionListener;
  *
  * @author agustin
  */
-public abstract class Controlador extends DropTarget implements ActionListener, MouseMotionListener, AdapterMouseListener {
+public abstract class Controlador extends DropTarget implements ActionListener, MouseMotionListener, AdapterMouseListener, AdaptadorWindowListener {
 
     private static final long serialVersionUID = 1L;
     

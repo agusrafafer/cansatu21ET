@@ -73,7 +73,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         panelTile5 = new javax.swing.JPanel();
         panelTile6 = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("CANSAT ESTACION TERRENA");
         setBackground(new java.awt.Color(254, 254, 254));
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/iconos/satelliteantenna.png")));
@@ -328,6 +328,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
                 ((JPanel) component).setDropTarget(new DropTarget(component, c));
             }
         }
+        this.addWindowListener(c);
     }
 
     @Override
@@ -392,6 +393,16 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     @Override
     public void cierraSplitPane(int posicion) {
         jSplitPane.setDividerLocation(posicion);
+    }
+    
+    @Override
+    public void cierraSistema(){
+        if (JOptionPane.showConfirmDialog(null, 
+            "¿Seguro desea salir?", "Información", 
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
     }
 
 }
