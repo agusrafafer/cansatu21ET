@@ -96,7 +96,7 @@
                               <Component id="jButtonQuitarArchSel" min="-2" pref="31" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jButtonTemp" max="32767" attributes="0"/>
-                          <Component id="jButtonHumedad" max="32767" attributes="0"/>
+                          <Component id="jButtonAltitud" max="32767" attributes="0"/>
                           <Component id="jButtonPresion" max="32767" attributes="0"/>
                           <Component id="jButtonIncliAcel" alignment="1" max="32767" attributes="0"/>
                           <Component id="jButtonRotaGiro" alignment="0" max="32767" attributes="0"/>
@@ -119,7 +119,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButtonTemp" min="-2" pref="71" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonHumedad" min="-2" pref="71" max="-2" attributes="0"/>
+                      <Component id="jButtonAltitud" min="-2" pref="71" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButtonPresion" min="-2" pref="71" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -150,7 +150,7 @@
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButtonTemp.setRolloverEnabled(true);&#xa;//String path = this.getClass().getResource(&quot;/iconos/icono-temperatura.gif&quot;).toString();&#xa;////InputStream is = this.getClass().getResourceAsStream(&quot;/iconos/icono-temperatura.gif&quot;);//para &#xe1;rbol&#xa;//&#xa;//ImageIcon animatedGif = new ImageIcon(path);&#xa;//jButtonTemp.setRolloverIcon(animatedGif);&#xa;//animatedGif.getImage().flush();&#xa;Icon iconTemp = IconFontSwing.buildIcon(FontAwesome.THERMOMETER_HALF, 18, new Color(130, 130, 130));&#xa;jButtonTemp.setIcon(iconTemp);"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonHumedad">
+            <Component class="javax.swing.JButton" name="jButtonAltitud">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
@@ -158,14 +158,14 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="82" green="82" red="82" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Humedad"/>
-                <Property name="actionCommand" type="java.lang.String" value="HumedadGrafico"/>
+                <Property name="text" type="java.lang.String" value="Altitud"/>
+                <Property name="actionCommand" type="java.lang.String" value="AltitudGrafico"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[70, 30]"/>
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Icon iconHumedad = IconFontSwing.buildIcon(FontAwesome.CLOUD, 18, new Color(130, 130, 130));&#xa;jButtonHumedad.setIcon(iconHumedad);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Icon iconH = IconFontSwing.buildIcon(FontAwesome.ARROWS_V, 18, new Color(130, 130, 130));&#xa;jButtonAltitud.setIcon(iconH);"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonPresion">

@@ -41,7 +41,7 @@ public class Helper {
                 String[] cabeceras = line.split(",");
                 for (String cabecera : cabeceras) {
                     if (cabecera.equals("Temperatura (*C)") || cabecera.equals("Presion (mb)")
-                            || cabecera.equals("Humedad (m s.n.m.)") || cabecera.equals("AX")
+                            || cabecera.equals("H (m s.n.m.)") || cabecera.equals("AX")
                             || cabecera.equals("AY")  || cabecera.equals("AZ")
                             || cabecera.equals("GX") || cabecera.equals("GY")
                             || cabecera.equals("GZ")) {
@@ -82,7 +82,7 @@ public class Helper {
             csv.readHeaders();
             String temp;
             String pres;
-            String hume;
+            String h;
             String ax;
             String ay;
             String az;
@@ -92,10 +92,10 @@ public class Helper {
             FormatoCsv registro;
             while (csv.readRecord()) {
                 //Las cabeceras del CSV son:
-                //Temperatura (*C); Presion (mb); Humedad (m s.n.m.); AX; AY; AZ; GX; GY; GZ
+                //Temperatura (*C); Presion (mb); H (m s.n.m.); AX; AY; AZ; GX; GY; GZ
                 temp = csv.get("Temperatura (*C)");
                 pres = csv.get("Presion (mb)");
-                hume = csv.get("Humedad (m s.n.m.)");
+                h = csv.get("H (m s.n.m.)");
                 ax = csv.get("AX");
                 ay = csv.get("AY");
                 az = csv.get("AZ");
@@ -103,7 +103,7 @@ public class Helper {
                 gy = csv.get("GY");
                 gz = csv.get("GZ");
 
-                registro = new FormatoCsv(Float.parseFloat(temp), Float.parseFloat(pres), Float.parseFloat(hume), Integer.parseInt(ax), Integer.parseInt(ay), Integer.parseInt(az), Integer.parseInt(gx), Integer.parseInt(gy), Integer.parseInt(gz));
+                registro = new FormatoCsv(Float.parseFloat(temp), Float.parseFloat(pres), Float.parseFloat(h), Integer.parseInt(ax), Integer.parseInt(ay), Integer.parseInt(az), Integer.parseInt(gx), Integer.parseInt(gy), Integer.parseInt(gz));
                 listaValores.add(registro);
             }
         } catch (IOException e) {

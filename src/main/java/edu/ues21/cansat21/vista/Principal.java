@@ -53,7 +53,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         jSplitPane = new javax.swing.JSplitPane();
         panelIzquierda = new javax.swing.JPanel();
         jButtonTemp = new javax.swing.JButton();
-        jButtonHumedad = new javax.swing.JButton();
+        jButtonAltitud = new javax.swing.JButton();
         jButtonPresion = new javax.swing.JButton();
         jButtonSelArchivo = new javax.swing.JButton();
         lblArchivoSeleccionado = new javax.swing.JLabel();
@@ -101,13 +101,13 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         Icon iconTemp = IconFontSwing.buildIcon(FontAwesome.THERMOMETER_HALF, 18, new Color(130, 130, 130));
         jButtonTemp.setIcon(iconTemp);
 
-        jButtonHumedad.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButtonHumedad.setForeground(new java.awt.Color(130, 130, 130));
-        jButtonHumedad.setText("Humedad");
-        jButtonHumedad.setActionCommand("HumedadGrafico");
-        jButtonHumedad.setPreferredSize(new java.awt.Dimension(70, 30));
-        Icon iconHumedad = IconFontSwing.buildIcon(FontAwesome.CLOUD, 18, new Color(130, 130, 130));
-        jButtonHumedad.setIcon(iconHumedad);
+        jButtonAltitud.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButtonAltitud.setForeground(new java.awt.Color(130, 130, 130));
+        jButtonAltitud.setText("Altitud");
+        jButtonAltitud.setActionCommand("AltitudGrafico");
+        jButtonAltitud.setPreferredSize(new java.awt.Dimension(70, 30));
+        Icon iconH = IconFontSwing.buildIcon(FontAwesome.ARROWS_V, 18, new Color(130, 130, 130));
+        jButtonAltitud.setIcon(iconH);
 
         jButtonPresion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButtonPresion.setForeground(new java.awt.Color(130, 130, 130));
@@ -195,7 +195,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonQuitarArchSel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButtonTemp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonHumedad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonAltitud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonPresion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonIncliAcel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonRotaGiro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -214,7 +214,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonHumedad, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonAltitud, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonPresion, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -282,7 +282,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<ArchivoSeleccionado> cmbArchivosSel;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JButton jButtonHumedad;
+    private javax.swing.JButton jButtonAltitud;
     private javax.swing.JButton jButtonIncliAcel;
     private javax.swing.JButton jButtonPresion;
     private javax.swing.JButton jButtonQuitarArchSel;

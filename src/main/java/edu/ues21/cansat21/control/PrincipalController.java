@@ -24,11 +24,9 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 import org.jfree.chart.ChartPanel;
-import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  * Clase que representa el controlado especifico que se encarga de manipular los
@@ -168,7 +166,6 @@ public class PrincipalController extends Controlador {
         if (!existeMenu) {
             ((ChartPanel) chartPanel).setMouseWheelEnabled(true);
             JMenuItem menuQuitar = new JMenuItem("Quitar");
-            //menuQuitar.setActionCommand("QUITAR");
             menuQuitar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {

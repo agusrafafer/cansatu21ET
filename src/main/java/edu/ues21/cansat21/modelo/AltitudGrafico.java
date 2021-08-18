@@ -20,11 +20,11 @@ import org.jfree.data.category.DefaultCategoryDataset;
 /**
  * Clase que representa un Command concreto y que permite implementar la
  * funcionalidad necesaria para poder graficar en un ChartPanel (JFreeChart) el
- * gráfico para los datos de la humedad.
+ * gráfico para los datos de la ALtitud.
  *
  * @author agustin
  */
-public class HumedadGrafico extends Grafico {
+public class AltitudGrafico extends Grafico {
 
     /**
      * El método que debe ser implementado cada vez que se desee crear un nuevo
@@ -59,7 +59,7 @@ public class HumedadGrafico extends Grafico {
         }
         if (chartPanel == null) {
             JFreeChart lineChart = ChartFactory.createLineChart(
-                    "Humedad",
+                    "Altitud",
                     "Lecturas", "m snm",
                     dataset,
                     PlotOrientation.VERTICAL,

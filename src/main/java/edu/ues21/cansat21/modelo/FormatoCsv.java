@@ -14,7 +14,7 @@ package edu.ues21.cansat21.modelo;
 public class FormatoCsv {    
     private float temperatura;
     private float presion;
-    private float humedad;
+    private float h;
     private int ax;
     private int ay;
     private int az;
@@ -22,10 +22,10 @@ public class FormatoCsv {
     private int gy;
     private int gz;
 
-    public FormatoCsv(float temperatura, float presion, float humedad, int ax, int ay, int az, int gx, int gy, int gz) {
+    public FormatoCsv(float temperatura, float presion, float h, int ax, int ay, int az, int gx, int gy, int gz) {
         this.temperatura = temperatura;
         this.presion = presion;
-        this.humedad = humedad;
+        this.h = h;
         this.ax = ax;
         this.ay = ay;
         this.az = az;
@@ -50,12 +50,12 @@ public class FormatoCsv {
         this.presion = presion;
     }
 
-    public float getHumedad() {
-        return humedad;
+    public float getH() {
+        return h;
     }
 
-    public void setHumedad(float humedad) {
-        this.humedad = humedad;
+    public void setH(float h) {
+        this.h = h;
     }
 
     public int getAx() {
