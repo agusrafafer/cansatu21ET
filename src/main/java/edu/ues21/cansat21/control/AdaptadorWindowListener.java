@@ -9,7 +9,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 /**
- *
+ * Interfaz que "Adapta" el evento WindowListener para que la clase
+ * que la implementa solo implemente los métodos que necesite.
  * @author agustin
  */
 public interface AdaptadorWindowListener extends WindowListener {
