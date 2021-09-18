@@ -57,4 +57,11 @@ public interface InterfazVista  {
     default void cierraSistema() {
         
     }
+    
+    default void muestraMenuOpciones() {
+    }
+    
+    default void muestraDialogoMenuOpciones(String nombreDialogo) {
+        
+    }
 }

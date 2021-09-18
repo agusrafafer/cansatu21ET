@@ -7,6 +7,7 @@ package edu.ues21.cansat21;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import edu.ues21.cansat21.control.PrincipalController;
+import edu.ues21.cansat21.modelo.Helper;
 import edu.ues21.cansat21.vista.InterfazVista;
 import edu.ues21.cansat21.vista.Principal;
 import java.util.logging.Level;
@@ -19,6 +20,7 @@ import jiconfont.swing.IconFontSwing;
 
 /**
  * La clase que inicia la aplicación
+ *
  * @author agustin
  */
 public class Main {

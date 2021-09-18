@@ -7,25 +7,42 @@ package edu.ues21.cansat21.modelo;
 
 import com.csvreader.CsvReader;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * Clase que contiene los métodos de ayuda o soporte para otras clases
+ *
  * @author agustin
  */
 public class Helper {
 
-    /***
+    /**
+     * *
      * Método que determina si el archivo seleccionado tiene el formato CSV
      * requerido
+     *
      * @param pathArchivoCsv La ruta del archivo a validar
-     * @return Devuelve true si es un  archivo correcto
+     * @return Devuelve true si es un archivo correcto
      */
     public boolean esArchivoValido(String pathArchivoCsv) {
         BufferedReader br = null;
@@ -42,7 +59,7 @@ public class Helper {
                 for (String cabecera : cabeceras) {
                     if (cabecera.equals("Temperatura (*C)") || cabecera.equals("Presion (mb)")
                             || cabecera.equals("H (m s.n.m.)") || cabecera.equals("AX")
-                            || cabecera.equals("AY")  || cabecera.equals("AZ")
+                            || cabecera.equals("AY") || cabecera.equals("AZ")
                             || cabecera.equals("GX") || cabecera.equals("GY")
                             || cabecera.equals("GZ")) {
                         valido = true;
@@ -68,8 +85,9 @@ public class Helper {
     }
 
     /**
-     * Método que toma un archivo CSV y devueve una lista 
-     * con objetos pertenecientes a la clase <b>FormatoCsv</b>
+     * Método que toma un archivo CSV y devueve una lista con objetos
+     * pertenecientes a la clase <b>FormatoCsv</b>
+     *
      * @param pathArchivoCsv La ruta del archivo CSV
      * @return Devuelve una lista de objetos del tipo FormatoCsv
      */
@@ -117,6 +135,141 @@ public class Helper {
         }
 
         return listaValores;
+    }
+
+    public static String cargarLicencia() throws IOException {
+        return new String(Helper.class.getResourceAsStream("/licencia").readAllBytes());
+    }
+
+    public static Properties cargarArchivoConfig() throws IOException {
+        Properties properties = new Properties();
+        properties.load(Helper.class.getResourceAsStream("/config.properties"));
+        return properties;
+    }
+
+    public static void guardarArchivoConfig(Properties properties) throws IOException, URISyntaxException {
+        properties.store(new BufferedWriter(new FileWriter(new File(Helper.class.getResource("/config.properties").toURI()))), "Propiedades CansatET");
+    }
+
+    public static void postAuditoria(String accion, String caracCliente, String cliente) {
+        new Thread(() -> {
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+
+            String auditoria = "{\n"
+                    + "  \"accion\": \"" + accion.toUpperCase() + "\",\n"
+                    + "  \"caracteristica\": \"" + caracCliente + "\",\n"
+                    + "  \"cliente\": \"" + cliente + "\"\n"
+                    + "}";
+
+            try {
+                HttpPost postRequest = new HttpPost("http://localhost/cansatues21/auditoria");
+                postRequest.addHeader("content-type", "application/json");
+                StringEntity auditoriaEntity = new StringEntity(auditoria);
+                postRequest.setEntity(auditoriaEntity);
+                HttpResponse response = httpClient.execute(postRequest);
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode != 200) {
+                    throw new RuntimeException("Fallo con codigo HTTP de error: " + statusCode);
+                }
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                httpClient.getConnectionManager().shutdown();
+            }
+        }).start();
+    }
+
+    public static void postCliente(String ip) {
+        //new Thread(() -> {
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+
+        String cliente = "{\n"
+                + "  \"codIdentificacion\": \"" + ip + "\" \n"
+                + "}";
+
+        try {
+            HttpPost postRequest = new HttpPost("http://localhost/cansatues21/cliente");
+            postRequest.addHeader("content-type", "application/json");
+            StringEntity clienteEntity = new StringEntity(cliente);
+            postRequest.setEntity(clienteEntity);
+            HttpResponse response = httpClient.execute(postRequest);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != 200) {
+                throw new RuntimeException("Fallo con codigo HTTP de error: " + statusCode);
+            }
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            httpClient.getConnectionManager().shutdown();
+        }
+        //}).start();
+    }
+
+    public static String getIdCliente(String ip) {
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        StringBuilder sb = new StringBuilder("-1");
+        try {
+            HttpGet getRequest = new HttpGet("http://localhost/cansatues21/cliente/" + ip);
+            getRequest.addHeader("content-type", "application/json");
+            HttpResponse response = httpClient.execute(getRequest);
+            BufferedReader rd = new BufferedReader(new InputStreamReader(
+                    response.getEntity().getContent()));
+
+            String line = "";
+            sb = new StringBuilder();
+            while ((line = rd.readLine()) != null) {
+                sb.append(line);
+            }
+
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != 200) {
+                throw new RuntimeException("Fallo con codigo HTTP de error: " + statusCode);
+            }
+            return sb.toString();
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            httpClient.getConnectionManager().shutdown();
+        }
+        return sb.toString();
+    }
+
+    public static String obtenerIpPublica() {
+        // buscamos la IP publica para usar como identificador de la 
+        // computadora
+        String ipPublica = "";
+        try {
+            URL url = new URL("http://bot.whatismyipaddress.com");
+            BufferedReader sc = new BufferedReader(new InputStreamReader(url.openStream()));
+            ipPublica = sc.readLine().trim();
+        } catch (IOException e) {
+            ipPublica = "0.0.0.0";
+        }
+        return ipPublica;
+    }
+
+    public static String obtenerDatosSOCliente() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SO: ");
+        sb.append(System.getProperty("os.name"));
+        sb.append("; ver: ");
+        sb.append(System.getProperty("os.version"));
+        sb.append("; arq: ");
+        sb.append(System.getProperty("os.arch"));
+        sb.append("; Java: ");
+        sb.append(System.getProperty("java.version"));
+        sb.append("; Java vendor: ");
+        sb.append(System.getProperty("java.vendor"));
+        sb.append("; Java vendor url: ");
+        sb.append(System.getProperty("java.vendor.url"));
+
+        return sb.toString();
     }
 
 }

@@ -40,10 +40,19 @@ public class PrincipalController extends Controlador {
     private static final long serialVersionUID = 1L;
 
     String claseGrafico;
+    String ipPublica;
+    String idCliente = "-1";
+    String caractCliente = "";
 
     public PrincipalController(InterfazVista vista, Grafico modelo) {
         VISTA = vista;
         MODELO = modelo;
+        ipPublica = Helper.obtenerIpPublica();
+        idCliente = Helper.getIdCliente(ipPublica);
+        caractCliente = Helper.obtenerDatosSOCliente();
+        if (idCliente.equals("-1")) {
+            Helper.postCliente(ipPublica);
+        }
     }
 
     @Override
@@ -69,6 +78,18 @@ public class PrincipalController extends Controlador {
 
             case "BORRAR_ARCH_SEL_ACCION":
                 ((Principal) VISTA).quitarItemComboArchivoSel();
+                break;
+            case "CONFIG_ACCION":
+                ((Principal) VISTA).muestraMenuOpciones();
+                ((Principal) VISTA).muestraDialogoMenuOpciones("Configuracion");
+                break;
+            case "AYUDA_ACCION":
+                ((Principal) VISTA).muestraMenuOpciones();
+                ((Principal) VISTA).muestraDialogoMenuOpciones("Ayuda");
+                break;
+            case "LICENCIA_ACCION":
+                ((Principal) VISTA).muestraMenuOpciones();
+                ((Principal) VISTA).muestraDialogoMenuOpciones("Licencia");
                 break;
         }
 
@@ -180,28 +201,37 @@ public class PrincipalController extends Controlador {
         }
         panel.revalidate();
         panel.repaint();
+
+        if (!idCliente.equals("-1")) {
+            Helper.postAuditoria(claseGrafico, caractCliente, idCliente);
+        }
     }
 
     @Override
     public void mouseClicked(MouseEvent me) {
         if (me.getSource() instanceof JLabel) {
-            if (((JLabel) me.getSource()).getAccessibleContext().getAccessibleName().equals("lblAmburguesa")) {
+            String nombreLbl = ((JLabel) me.getSource()).getAccessibleContext().getAccessibleName();
+            if (nombreLbl.equals("lblAmburguesa")) {
                 ((Principal) VISTA).cierraSplitPane(0);
+            } else if (nombreLbl.equals("lblOpciones")) {
+                ((Principal) VISTA).muestraMenuOpciones();
             }
         }
     }
-    
+
     @Override
     public void mouseEntered(MouseEvent me) {
         if (me.getSource() instanceof JLabel) {
-            if (((JLabel) me.getSource()).getAccessibleContext().getAccessibleName().equals("lblAmburguesa")) {
+            String nombreLbl = ((JLabel) me.getSource()).getAccessibleContext().getAccessibleName();
+            if (nombreLbl.equals("lblAmburguesa") || nombreLbl.equals("lblOpciones")) {
                 ((Principal) VISTA).setCursor(new Cursor(Cursor.HAND_CURSOR));
             } else {
                 ((Principal) VISTA).setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                ((Principal) VISTA).muestraMenuOpciones();
             }
         }
     }
-    
+
     @Override
     public void mouseExited(MouseEvent me) {
         ((Principal) VISTA).setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

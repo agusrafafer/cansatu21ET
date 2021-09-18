@@ -7,15 +7,23 @@ package edu.ues21.cansat21.vista;
 
 import edu.ues21.cansat21.control.Controlador;
 import edu.ues21.cansat21.modelo.ArchivoSeleccionado;
+import edu.ues21.cansat21.modelo.Helper;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.dnd.DropTarget;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
@@ -50,6 +58,19 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        menuOpciones = new javax.swing.JPopupMenu();
+        itemConfiguracion = new javax.swing.JMenuItem();
+        itemAyuda = new javax.swing.JMenuItem();
+        itemLicencia = new javax.swing.JMenuItem();
+        Licencia = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtLicencia = new javax.swing.JTextArea();
+        Ayuda = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        Configuracion = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jSplitPane = new javax.swing.JSplitPane();
         panelIzquierda = new javax.swing.JPanel();
         jButtonTemp = new javax.swing.JButton();
@@ -61,6 +82,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         lblAmburguesa = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 32767));
+        lblOpciones = new javax.swing.JLabel();
         cmbArchivosSel = new javax.swing.JComboBox<>();
         jButtonQuitarArchSel = new javax.swing.JButton();
         jButtonIncliAcel = new javax.swing.JButton();
@@ -72,6 +94,104 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         panelTile4 = new javax.swing.JPanel();
         panelTile5 = new javax.swing.JPanel();
         panelTile6 = new javax.swing.JPanel();
+
+        itemConfiguracion.setText("Configuración");
+        itemConfiguracion.setActionCommand("CONFIG_ACCION");
+        Icon iconConfig = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.BUILD, 14, new Color(0, 0, 0));
+        itemConfiguracion.setIcon(iconConfig);
+        menuOpciones.add(itemConfiguracion);
+
+        itemAyuda.setText("Ayuda");
+        itemAyuda.setActionCommand("AYUDA_ACCION");
+        Icon iconAyuda = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.HELP, 14, new Color(0, 0, 0));
+        itemAyuda.setIcon(iconAyuda);
+        menuOpciones.add(itemAyuda);
+
+        itemLicencia.setText("Licencia");
+        itemLicencia.setActionCommand("LICENCIA_ACCION");
+        Icon iconLicencia = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.CLASS, 14, new Color(0, 0, 0));
+        itemLicencia.setIcon(iconLicencia);
+        menuOpciones.add(itemLicencia);
+
+        Licencia.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        Licencia.setTitle("Licencia");
+        Licencia.setAlwaysOnTop(true);
+        Licencia.setModal(true);
+
+        txtLicencia.setEditable(false);
+        txtLicencia.setColumns(20);
+        txtLicencia.setRows(5);
+        jScrollPane1.setViewportView(txtLicencia);
+
+        javax.swing.GroupLayout LicenciaLayout = new javax.swing.GroupLayout(Licencia.getContentPane());
+        Licencia.getContentPane().setLayout(LicenciaLayout);
+        LicenciaLayout.setHorizontalGroup(
+            LicenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+        );
+        LicenciaLayout.setVerticalGroup(
+            LicenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+        );
+
+        Ayuda.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        Ayuda.setTitle("Ayuda");
+        Ayuda.setAlwaysOnTop(true);
+        Ayuda.setModal(true);
+        Ayuda.setResizable(false);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/construccion.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout AyudaLayout = new javax.swing.GroupLayout(Ayuda.getContentPane());
+        Ayuda.getContentPane().setLayout(AyudaLayout);
+        AyudaLayout.setHorizontalGroup(
+            AyudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        AyudaLayout.setVerticalGroup(
+            AyudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        Configuracion.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        Configuracion.setAlwaysOnTop(true);
+        Configuracion.setModal(true);
+        Configuracion.setResizable(false);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/construccion.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout ConfiguracionLayout = new javax.swing.GroupLayout(Configuracion.getContentPane());
+        Configuracion.getContentPane().setLayout(ConfiguracionLayout);
+        ConfiguracionLayout.setHorizontalGroup(
+            ConfiguracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        ConfiguracionLayout.setVerticalGroup(
+            ConfiguracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("CANSAT ESTACION TERRENA");
@@ -155,6 +275,14 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         panelMenu.add(jLabel1, gridBagConstraints);
         panelMenu.add(filler1, new java.awt.GridBagConstraints());
+
+        Icon iconOpc = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SETTINGS, 18, new Color(255, 255, 255));
+        lblOpciones.setIcon(iconOpc);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        panelMenu.add(lblOpciones, gridBagConstraints);
+        lblOpciones.getAccessibleContext().setAccessibleName("lblOpciones");
 
         jButtonQuitarArchSel.setToolTipText("Quitar el archivo seleccionado");
         jButtonQuitarArchSel.setActionCommand("BORRAR_ARCH_SEL_ACCION");
@@ -280,8 +408,14 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog Ayuda;
+    private javax.swing.JDialog Configuracion;
+    private javax.swing.JDialog Licencia;
     private javax.swing.JComboBox<ArchivoSeleccionado> cmbArchivosSel;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.JMenuItem itemAyuda;
+    private javax.swing.JMenuItem itemConfiguracion;
+    private javax.swing.JMenuItem itemLicencia;
     private javax.swing.JButton jButtonAltitud;
     private javax.swing.JButton jButtonIncliAcel;
     private javax.swing.JButton jButtonPresion;
@@ -290,9 +424,16 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     private javax.swing.JButton jButtonSelArchivo;
     private javax.swing.JButton jButtonTemp;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane;
     private javax.swing.JLabel lblAmburguesa;
     private javax.swing.JLabel lblArchivoSeleccionado;
+    private javax.swing.JLabel lblOpciones;
+    private javax.swing.JPopupMenu menuOpciones;
     private javax.swing.JPanel panelDerecha;
     private javax.swing.JPanel panelIzquierda;
     private javax.swing.JPanel panelMenu;
@@ -302,6 +443,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     public javax.swing.JPanel panelTile4;
     public javax.swing.JPanel panelTile5;
     public javax.swing.JPanel panelTile6;
+    private javax.swing.JTextArea txtLicencia;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -318,8 +460,16 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         }
         for (Component component : this.panelMenu.getComponents()) {
             if (component instanceof JLabel) {
-                if (component.getAccessibleContext().getAccessibleName().equals("lblAmburguesa")) {
+                String nombreLabel = component.getAccessibleContext().getAccessibleName();
+                if (nombreLabel.equals("lblAmburguesa") || nombreLabel.equals("lblOpciones")) {
                     ((JLabel) component).addMouseListener(c);
+                }
+            }
+        }
+        for (Component component : this.menuOpciones.getComponents()) {
+            if (component instanceof JMenuItem) {
+                if (((JMenuItem) component).getActionCommand().contains("ACCION")) {
+                    ((JMenuItem) component).addActionListener(c);
                 }
             }
         }
@@ -335,6 +485,25 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     public void iniciaVista() {
         setLocationRelativeTo(null);
         setVisible(true);
+        try {
+            Properties prop = Helper.cargarArchivoConfig();
+            String compartir = (String) prop.get("compartirDatos");
+            if (compartir.equals("NO")) {
+                if (JOptionPane.showConfirmDialog(null,
+                        "¿Desea compartir los datos generados por el uso de la aplicación con el equipo de investigación que la desarrollo?",
+                        "Información",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    prop.setProperty("compartirDatos", "SI");
+                    JOptionPane.showMessageDialog(this, "Gracias por compartir su información con la ciencia", "Información", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+            prop.setProperty("ultimoAcceso", String.valueOf(System.currentTimeMillis()));
+            Helper.guardarArchivoConfig(prop);
+        } catch (IOException | URISyntaxException ex) {
+            imprimeMensaje(ex);
+        }
+
     }
 
     @Override
@@ -356,8 +525,6 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         jfc.addChoosableFileFilter(filter);
         int returnValue = jfc.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-//            lblArchivoSeleccionado.setText(jfc.getSelectedFile().getPath().substring(jfc.getSelectedFile().getPath().lastIndexOf(System.getProperty("file.separator"))));
-//            lblArchivoSeleccionado.setToolTipText(jfc.getSelectedFile().getPath());
             return jfc.getSelectedFiles();
         }
         return null;
@@ -370,7 +537,8 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     }
 
     @Override
-    public void cargarComboArchivosSel(ArchivoSeleccionado archivosSel) {
+    public void cargarComboArchivosSel(ArchivoSeleccionado archivosSel
+    ) {
         cmbArchivosSel.addItem(archivosSel);
     }
 
@@ -391,18 +559,59 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     }
 
     @Override
-    public void cierraSplitPane(int posicion) {
+    public void cierraSplitPane(int posicion
+    ) {
         jSplitPane.setDividerLocation(posicion);
     }
-    
+
     @Override
-    public void cierraSistema(){
-        if (JOptionPane.showConfirmDialog(null, 
-            "¿Seguro desea salir?", "Información", 
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+    public void cierraSistema() {
+        if (JOptionPane.showConfirmDialog(null,
+                "¿Seguro desea salir?", "Información",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }
 
+    @Override
+    public void muestraMenuOpciones() {
+        Point p = this.lblOpciones.getLocationOnScreen();
+        menuOpciones.setLocation(new Point((int) p.getX(), (int) (p.getY() + 20.0d)));
+        menuOpciones.setVisible(!this.menuOpciones.isVisible());
+    }
+
+    @Override
+    public void muestraDialogoMenuOpciones(String nombreDialogo) {
+        switch (nombreDialogo.toUpperCase()) {
+            case "CONFIGURACION":
+                Configuracion.pack();
+                Configuracion.setLocationRelativeTo(this);
+                Configuracion.setSize(600, 400);
+                Configuracion.setVisible(true);
+                break;
+            case "AYUDA":
+                Ayuda.pack();
+                Ayuda.setLocationRelativeTo(this);
+                Ayuda.setSize(600, 400);
+                Ayuda.setVisible(true);
+                break;
+            case "LICENCIA":
+                String lic = "";
+                 {
+                    try {
+                        lic = Helper.cargarLicencia();
+                    } catch (IOException ex) {
+                        imprimeMensaje(ex);
+                    }
+                }
+                this.txtLicencia.setText(lic);
+                Licencia.pack();
+                Licencia.setLocationRelativeTo(this);
+                Licencia.setSize(600, 400);
+                Licencia.setVisible(true);
+                break;
+
+        }
+    }
 }
