@@ -490,7 +490,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
             String compartir = (String) prop.get("compartirDatos");
             if (compartir.equals("NO")) {
                 if (JOptionPane.showConfirmDialog(null,
-                        "¿Desea compartir los datos generados por el uso de la aplicación con el equipo de investigación que la desarrollo?",
+                        "¿Desea compartir los datos generados por el uso de la aplicación para colaborar con el equipo de investigación que la creo?",
                         "Información",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {

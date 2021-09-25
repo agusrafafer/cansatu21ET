@@ -20,6 +20,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -203,7 +205,15 @@ public class PrincipalController extends Controlador {
         panel.repaint();
 
         if (!idCliente.equals("-1")) {
-            Helper.postAuditoria(claseGrafico, caractCliente, idCliente);
+            try {
+                Properties prop = Helper.cargarArchivoConfig();
+                String compartir = (String) prop.get("compartirDatos");
+                if (compartir.equals("SI")) {
+                    Helper.postAuditoria(claseGrafico, caractCliente, idCliente);
+                }
+            } catch (IOException ex) {
+                ((Principal) VISTA).imprimeMensaje(ex);
+            }
         }
     }
 

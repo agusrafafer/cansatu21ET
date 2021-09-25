@@ -6,18 +6,20 @@
 package edu.ues21.cansat21.modelo;
 
 import com.csvreader.CsvReader;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -28,6 +30,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreProtocolPNames;
 
 /**
  * Clase que contiene los métodos de ayuda o soporte para otras clases
@@ -142,18 +145,27 @@ public class Helper {
     }
 
     public static Properties cargarArchivoConfig() throws IOException {
+        File f = new File(Helper.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        //Para obtener el path donde esta corriendo la aplicacion ya sea un jar o no
+        String path = f.getParent();
+        String sep = FileSystems.getDefault().getSeparator();
         Properties properties = new Properties();
-        properties.load(Helper.class.getResourceAsStream("/config.properties"));
+        properties.load(new FileReader(new File(path + sep + "resources" + sep + "config.properties")));
         return properties;
     }
 
     public static void guardarArchivoConfig(Properties properties) throws IOException, URISyntaxException {
-        properties.store(new BufferedWriter(new FileWriter(new File(Helper.class.getResource("/config.properties").toURI()))), "Propiedades CansatET");
+        File f = new File(Helper.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        //Para obtener el path donde esta corriendo la aplicacion ya sea un jar o no
+        String path = f.getParent();
+        String sep = FileSystems.getDefault().getSeparator();
+        properties.store(new BufferedWriter(new FileWriter(new File(path + sep + "resources" + sep + "config.properties"))), "Propiedades CansatET");
     }
 
     public static void postAuditoria(String accion, String caracCliente, String cliente) {
         new Thread(() -> {
             DefaultHttpClient httpClient = new DefaultHttpClient();
+            httpClient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "CansatUes21");
 
             String auditoria = "{\n"
                     + "  \"accion\": \"" + accion.toUpperCase() + "\",\n"
@@ -162,7 +174,9 @@ public class Helper {
                     + "}";
 
             try {
-                HttpPost postRequest = new HttpPost("http://localhost/cansatues21/auditoria");
+                Properties prop = cargarArchivoConfig();
+                String urlServidor = (String) prop.get("urlServidor");
+                HttpPost postRequest = new HttpPost(urlServidor + "/auditoria");
                 postRequest.addHeader("content-type", "application/json");
                 StringEntity auditoriaEntity = new StringEntity(auditoria);
                 postRequest.setEntity(auditoriaEntity);
@@ -184,13 +198,16 @@ public class Helper {
     public static void postCliente(String ip) {
         //new Thread(() -> {
         DefaultHttpClient httpClient = new DefaultHttpClient();
+        httpClient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "CansatUes21");
 
         String cliente = "{\n"
                 + "  \"codIdentificacion\": \"" + ip + "\" \n"
                 + "}";
 
         try {
-            HttpPost postRequest = new HttpPost("http://localhost/cansatues21/cliente");
+            Properties prop = cargarArchivoConfig();
+            String urlServidor = (String) prop.get("urlServidor");
+            HttpPost postRequest = new HttpPost(urlServidor + "/cliente");
             postRequest.addHeader("content-type", "application/json");
             StringEntity clienteEntity = new StringEntity(cliente);
             postRequest.setEntity(clienteEntity);
@@ -211,9 +228,13 @@ public class Helper {
 
     public static String getIdCliente(String ip) {
         DefaultHttpClient httpClient = new DefaultHttpClient();
+        httpClient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "CansatUes21");
+
         StringBuilder sb = new StringBuilder("-1");
         try {
-            HttpGet getRequest = new HttpGet("http://localhost/cansatues21/cliente/" + ip);
+            Properties prop = cargarArchivoConfig();
+            String urlServidor = (String) prop.get("urlServidor");
+            HttpGet getRequest = new HttpGet(urlServidor + "/cliente/" + ip);
             getRequest.addHeader("content-type", "application/json");
             HttpResponse response = httpClient.execute(getRequest);
             BufferedReader rd = new BufferedReader(new InputStreamReader(
@@ -245,7 +266,9 @@ public class Helper {
         // computadora
         String ipPublica = "";
         try {
-            URL url = new URL("http://bot.whatismyipaddress.com");
+            Properties prop = cargarArchivoConfig();
+            String urlServidorIp = (String) prop.get("ipPublica");
+            URL url = new URL(urlServidorIp);
             BufferedReader sc = new BufferedReader(new InputStreamReader(url.openStream()));
             ipPublica = sc.readLine().trim();
         } catch (IOException e) {
