@@ -17,8 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -40,7 +38,7 @@ import jiconfont.swing.IconFontSwing;
 public class Principal extends javax.swing.JFrame implements InterfazVista {
 
     private static final long serialVersionUID = 1L;
-
+    private String dirArchivosCsv = null;
     /**
      * Creates new form Principal
      */
@@ -517,7 +515,12 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
 
     @Override
     public File[] seleccionarArchivos() {
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        JFileChooser jfc;
+        if(dirArchivosCsv == null){
+            jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        } else {
+            jfc = new JFileChooser(dirArchivosCsv);
+        }
         jfc.setDialogTitle("Seleccione 1 o más archivo del CANSAT");
         jfc.setMultiSelectionEnabled(true);
         jfc.setAcceptAllFileFilterUsed(false);
@@ -525,6 +528,9 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         jfc.addChoosableFileFilter(filter);
         int returnValue = jfc.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
+            if(jfc.getSelectedFiles().length > 0) {
+                dirArchivosCsv = jfc.getSelectedFiles()[0].getAbsoluteFile().getParent();
+            }
             return jfc.getSelectedFiles();
         }
         return null;
@@ -537,8 +543,19 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     }
 
     @Override
-    public void cargarComboArchivosSel(ArchivoSeleccionado archivosSel
-    ) {
+    public void cargarComboArchivosSel(ArchivoSeleccionado archivosSel) {
+        boolean existe = false;
+        for (int i = 0; i < cmbArchivosSel.getItemCount(); i++) {
+            ArchivoSeleccionado archi = cmbArchivosSel.getItemAt(i);
+            if(archi.getNombreArchivo().equals(archivosSel.getNombreArchivo())){
+               existe = true; 
+               break;
+            }
+        }
+        if(existe){
+           imprimeMensaje(new Exception("Ese archivo ya fue cargado"));
+           return;
+        }
         cmbArchivosSel.addItem(archivosSel);
     }
 

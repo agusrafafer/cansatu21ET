@@ -59,8 +59,8 @@ public class PresionGrafico extends Grafico {
         }
         if (chartPanel == null) {
             JFreeChart lineChart = ChartFactory.createLineChart(
-                    "Presion",
-                    "Lecturas", "mb",
+                    "Presión",
+                    "Datos de archivos", "mb",
                     dataset,
                     PlotOrientation.VERTICAL,
                     true, true, false);

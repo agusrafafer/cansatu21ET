@@ -55,12 +55,12 @@ public class TemperaturaGrafico extends Grafico {
         
         for (int i = 0; i < listaValores.size(); i++) {
             FormatoCsv valor = listaValores.get(i);
-            dataset.addValue(valor.getPresion(), nombreSerie.toUpperCase() + "[T]", Integer.toString(i + 1));
+            dataset.addValue(valor.getTemperatura(), nombreSerie.toUpperCase() + "[T]", Integer.toString(i + 1));
         }
         if (chartPanel == null) {
             JFreeChart lineChart = ChartFactory.createLineChart(
                     "Temperatura",
-                    "Lecturas", "ºC",
+                    "Datos de archivos", "ºC",
                     dataset,
                     PlotOrientation.VERTICAL,
                     true, true, false);

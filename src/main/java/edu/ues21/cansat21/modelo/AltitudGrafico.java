@@ -55,12 +55,12 @@ public class AltitudGrafico extends Grafico {
         
         for (int i = 0; i < listaValores.size(); i++) {
             FormatoCsv valor = listaValores.get(i);
-            dataset.addValue(valor.getPresion(), nombreSerie.toUpperCase() + "[H]", Integer.toString(i + 1));
+            dataset.addValue(valor.getH(), nombreSerie.toUpperCase() + "[H]", Integer.toString(i + 1));
         }
         if (chartPanel == null) {
             JFreeChart lineChart = ChartFactory.createLineChart(
                     "Altitud",
-                    "Lecturas", "m snm",
+                    "Datos de archivos", "m snm",
                     dataset,
                     PlotOrientation.VERTICAL,
                     true, true, false);

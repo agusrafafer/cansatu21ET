@@ -152,7 +152,7 @@ public class PrincipalController extends Controlador {
             return;
         }
         if (((Principal) VISTA).pathArchivoSeleccionado() == null) {
-            ((Principal) VISTA).imprimeMensaje(new Exception("No selecciono ningún archivo"));
+            ((Principal) VISTA).imprimeMensaje(new Exception("No seleccionó ningún archivo"));
             return;
         }
         DropTarget dropTarget = (java.awt.dnd.DropTarget) evt.getSource();
@@ -222,7 +222,7 @@ public class PrincipalController extends Controlador {
         if (me.getSource() instanceof JLabel) {
             String nombreLbl = ((JLabel) me.getSource()).getAccessibleContext().getAccessibleName();
             if (nombreLbl.equals("lblAmburguesa")) {
-                ((Principal) VISTA).cierraSplitPane(0);
+                ((Principal) VISTA).cierraSplitPane(10);
             } else if (nombreLbl.equals("lblOpciones")) {
                 ((Principal) VISTA).muestraMenuOpciones();
             }
