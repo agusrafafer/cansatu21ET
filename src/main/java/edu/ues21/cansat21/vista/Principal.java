@@ -39,6 +39,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
 
     private static final long serialVersionUID = 1L;
     private String dirArchivosCsv = null;
+
     /**
      * Creates new form Principal
      */
@@ -77,7 +78,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         jButtonSelArchivo = new javax.swing.JButton();
         lblArchivoSeleccionado = new javax.swing.JLabel();
         panelMenu = new javax.swing.JPanel();
-        lblAmburguesa = new javax.swing.JLabel();
+        lblHamburguesa = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 0), new java.awt.Dimension(11, 32767));
         lblOpciones = new javax.swing.JLabel();
@@ -92,6 +93,8 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         panelTile4 = new javax.swing.JPanel();
         panelTile5 = new javax.swing.JPanel();
         panelTile6 = new javax.swing.JPanel();
+        panelHamburguesaMostrar = new javax.swing.JPanel();
+        lblHamburguesaMostrar = new javax.swing.JLabel();
 
         itemConfiguracion.setText("Configuración");
         itemConfiguracion.setActionCommand("CONFIG_ACCION");
@@ -200,6 +203,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         jSplitPane.setBackground(new java.awt.Color(254, 254, 254));
         jSplitPane.setDividerLocation(200);
         jSplitPane.setDividerSize(5);
+        jSplitPane.setEnabled(false);
         jSplitPane.setPreferredSize(new java.awt.Dimension(800, 600));
 
         panelIzquierda.setBackground(new java.awt.Color(137, 196, 244));
@@ -250,16 +254,16 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         panelMenu.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         panelMenu.setLayout(new java.awt.GridBagLayout());
 
-        lblAmburguesa.setBackground(new java.awt.Color(54, 100, 194));
-        lblAmburguesa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblAmburguesa.setForeground(new java.awt.Color(255, 255, 255));
+        lblHamburguesa.setBackground(new java.awt.Color(54, 100, 194));
+        lblHamburguesa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblHamburguesa.setForeground(new java.awt.Color(255, 255, 255));
         Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.MENU, 18, new Color(255, 255, 255));
-        lblAmburguesa.setIcon(icon);
+        lblHamburguesa.setIcon(icon);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        panelMenu.add(lblAmburguesa, gridBagConstraints);
-        lblAmburguesa.getAccessibleContext().setAccessibleName("lblAmburguesa");
+        panelMenu.add(lblHamburguesa, gridBagConstraints);
+        lblHamburguesa.getAccessibleContext().setAccessibleName("lblHamburguesa");
 
         jLabel1.setBackground(new java.awt.Color(54, 100, 194));
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -347,7 +351,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
                 .addComponent(jButtonIncliAcel, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonRotaGiro, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jSplitPane.setLeftComponent(panelIzquierda);
@@ -383,20 +387,44 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
 
     jSplitPane.setRightComponent(panelDerecha);
 
+    lblHamburguesaMostrar.setText("lblHamburguesaMostrar");
+    Icon iconHamburguesa = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.MENU, 18, new Color(0, 0, 0));
+    lblHamburguesaMostrar.setIcon(iconHamburguesa);
+    lblHamburguesaMostrar.setVisible(false);
+
+    javax.swing.GroupLayout panelHamburguesaMostrarLayout = new javax.swing.GroupLayout(panelHamburguesaMostrar);
+    panelHamburguesaMostrar.setLayout(panelHamburguesaMostrarLayout);
+    panelHamburguesaMostrarLayout.setHorizontalGroup(
+        panelHamburguesaMostrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(panelHamburguesaMostrarLayout.createSequentialGroup()
+            .addComponent(lblHamburguesaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))
+    );
+    panelHamburguesaMostrarLayout.setVerticalGroup(
+        panelHamburguesaMostrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(lblHamburguesaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+    );
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(panelHamburguesaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelHamburguesaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
             .addContainerGap())
     );
 
@@ -428,11 +456,13 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane;
-    private javax.swing.JLabel lblAmburguesa;
     private javax.swing.JLabel lblArchivoSeleccionado;
+    private javax.swing.JLabel lblHamburguesa;
+    private javax.swing.JLabel lblHamburguesaMostrar;
     private javax.swing.JLabel lblOpciones;
     private javax.swing.JPopupMenu menuOpciones;
     private javax.swing.JPanel panelDerecha;
+    private javax.swing.JPanel panelHamburguesaMostrar;
     private javax.swing.JPanel panelIzquierda;
     private javax.swing.JPanel panelMenu;
     public javax.swing.JPanel panelTile1;
@@ -459,7 +489,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         for (Component component : this.panelMenu.getComponents()) {
             if (component instanceof JLabel) {
                 String nombreLabel = component.getAccessibleContext().getAccessibleName();
-                if (nombreLabel.equals("lblAmburguesa") || nombreLabel.equals("lblOpciones")) {
+                if (nombreLabel.equals("lblHamburguesa") || nombreLabel.equals("lblOpciones")) {
                     ((JLabel) component).addMouseListener(c);
                 }
             }
@@ -474,6 +504,14 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         for (Component component : this.panelDerecha.getComponents()) {
             if (component instanceof JPanel) {
                 ((JPanel) component).setDropTarget(new DropTarget(component, c));
+            }
+        }
+        for (Component component : this.panelHamburguesaMostrar.getComponents()) {
+            if (component instanceof JLabel) {
+                String nombreLabel = component.getAccessibleContext().getAccessibleName();
+                if (nombreLabel.equals("lblHamburguesaMostrar")) {
+                    ((JLabel) component).addMouseListener(c);
+                }
             }
         }
         this.addWindowListener(c);
@@ -516,7 +554,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     @Override
     public File[] seleccionarArchivos() {
         JFileChooser jfc;
-        if(dirArchivosCsv == null){
+        if (dirArchivosCsv == null) {
             jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         } else {
             jfc = new JFileChooser(dirArchivosCsv);
@@ -528,7 +566,7 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         jfc.addChoosableFileFilter(filter);
         int returnValue = jfc.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            if(jfc.getSelectedFiles().length > 0) {
+            if (jfc.getSelectedFiles().length > 0) {
                 dirArchivosCsv = jfc.getSelectedFiles()[0].getAbsoluteFile().getParent();
             }
             return jfc.getSelectedFiles();
@@ -547,14 +585,14 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
         boolean existe = false;
         for (int i = 0; i < cmbArchivosSel.getItemCount(); i++) {
             ArchivoSeleccionado archi = cmbArchivosSel.getItemAt(i);
-            if(archi.getNombreArchivo().equals(archivosSel.getNombreArchivo())){
-               existe = true; 
-               break;
+            if (archi.getNombreArchivo().equals(archivosSel.getNombreArchivo())) {
+                existe = true;
+                break;
             }
         }
-        if(existe){
-           imprimeMensaje(new Exception("Ese archivo ya fue cargado"));
-           return;
+        if (existe) {
+            imprimeMensaje(new Exception("Ese archivo ya fue cargado"));
+            return;
         }
         cmbArchivosSel.addItem(archivosSel);
     }
@@ -576,9 +614,15 @@ public class Principal extends javax.swing.JFrame implements InterfazVista {
     }
 
     @Override
-    public void cierraSplitPane(int posicion
-    ) {
+    public void cierraSplitPane(int posicion) {
         jSplitPane.setDividerLocation(posicion);
+        if (posicion == 0) {//si posicion es igual a 0 entonces estoy cerrando el panel izquierdo
+            lblHamburguesaMostrar.setText("");
+            lblHamburguesaMostrar.getAccessibleContext().setAccessibleName("lblHamburguesaMostrar");
+            lblHamburguesaMostrar.setVisible(true);
+        } else {
+            lblHamburguesaMostrar.setVisible(false);
+        }
     }
 
     @Override

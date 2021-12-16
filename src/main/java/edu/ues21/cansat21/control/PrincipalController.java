@@ -221,10 +221,18 @@ public class PrincipalController extends Controlador {
     public void mouseClicked(MouseEvent me) {
         if (me.getSource() instanceof JLabel) {
             String nombreLbl = ((JLabel) me.getSource()).getAccessibleContext().getAccessibleName();
-            if (nombreLbl.equals("lblAmburguesa")) {
-                ((Principal) VISTA).cierraSplitPane(10);
-            } else if (nombreLbl.equals("lblOpciones")) {
-                ((Principal) VISTA).muestraMenuOpciones();
+            switch (nombreLbl) {
+                case "lblHamburguesa":
+                    ((Principal) VISTA).cierraSplitPane(0);
+                    break;
+                case "lblOpciones":
+                    ((Principal) VISTA).muestraMenuOpciones();
+                    break;
+                case "lblHamburguesaMostrar":
+                    ((Principal) VISTA).cierraSplitPane(200);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -233,7 +241,7 @@ public class PrincipalController extends Controlador {
     public void mouseEntered(MouseEvent me) {
         if (me.getSource() instanceof JLabel) {
             String nombreLbl = ((JLabel) me.getSource()).getAccessibleContext().getAccessibleName();
-            if (nombreLbl.equals("lblAmburguesa") || nombreLbl.equals("lblOpciones")) {
+            if (nombreLbl.equals("lblHamburguesa") || nombreLbl.equals("lblOpciones") || nombreLbl.equals("lblHamburguesaMostrar")) {
                 ((Principal) VISTA).setCursor(new Cursor(Cursor.HAND_CURSOR));
             } else {
                 ((Principal) VISTA).setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
