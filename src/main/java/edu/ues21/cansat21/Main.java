@@ -7,15 +7,11 @@ package edu.ues21.cansat21;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import edu.ues21.cansat21.control.PrincipalController;
-import edu.ues21.cansat21.modelo.Helper;
 import edu.ues21.cansat21.vista.InterfazVista;
 import edu.ues21.cansat21.vista.Principal;
 import edu.ues21.cansat21.vista.Splash;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.io.File;
 import java.util.Random;
-import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -43,7 +39,7 @@ public class Main {
         }
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
         IconFontSwing.register(FontAwesome.getIconFont());
-
+        //Esto es para la pantalla de carga que simplemente no hace nada :) 
         Splash splash = new Splash();
         splash.setLocationRelativeTo(null);
         splash.lblProgreso.setText("Ajustando entorno...");
