@@ -27,8 +27,9 @@ import jiconfont.swing.IconFontSwing;
  */
 public class Main {
 
-    /**
-     * @param args the command line arguments
+    /***
+     * Este es el metodo que inicia todo
+     * @param args Los argumentos que se pyeden enviar al iniciar la app
      */
     public static void main(String args[]) {
         try {

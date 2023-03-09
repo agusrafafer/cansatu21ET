@@ -6,7 +6,6 @@
 package edu.ues21.cansat21.modelo;
 
 import com.csvreader.CsvReader;
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -60,7 +59,7 @@ public class Helper {
             while ((line = br.readLine()) != null && cont == 0) {
                 String[] cabeceras = line.split(",");
                 for (String cabecera : cabeceras) {
-                    if (cabecera.equals("Temperatura (*C)") || cabecera.equals("Presión (mb)")
+                    if (cabecera.equals("Temperatura (*C)") || cabecera.equals("Presion (mb)")
                             || cabecera.equals("H (m s.n.m.)") || cabecera.equals("AX")
                             || cabecera.equals("AY") || cabecera.equals("AZ")
                             || cabecera.equals("GX") || cabecera.equals("GY")
